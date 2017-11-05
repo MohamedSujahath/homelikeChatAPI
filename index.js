@@ -63,14 +63,14 @@ var server = app.listen(process.env.port || 5000, '0.0.0.0' , function(){
 });
 
 // set the view engine to ejs
-app.set('view engine', 'ejs');
+//app.set('view engine', 'ejs');
 
 // set the home page route
-app.get('/', function(req, res) {
+/*app.get('/', function(req, res) {
 
     // ejs render automatically looks in the views folder
     res.render('index');
-});
+});*/
 
 
 if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
