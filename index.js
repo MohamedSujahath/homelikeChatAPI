@@ -62,11 +62,21 @@ app.use('/api', routes);
 
 //listen for requests
 
-var port = process.env.port || 5000;
+//var port = process.env.port || 5000;
 
-var server = app.listen(port, '0.0.0.0' , function(){
+app.set('port', (process.env.PORT || 5000));
+
+/*var server = app.listen(port, '0.0.0.0' , function(){
     console.log('now listening for requests on ' + port);
 
+});*/
+
+//For avoidong Heroku $PORT error
+app.get('/', function(request, response) {
+    var result = 'App is running'
+    response.send(result);
+}).listen(app.get('port'), function() {
+    console.log('App is running, server is listening on port ', app.get('port'));
 });
 
 // set the view engine to ejs
