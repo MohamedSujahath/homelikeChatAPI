@@ -10,8 +10,6 @@ const mongoose = require('mongoose');
 
 const assert = require('assert');
 
-const query = require('query');
-
 const cors = require('cors');
 
 const passport = require('passport');
