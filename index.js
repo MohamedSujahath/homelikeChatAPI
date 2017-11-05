@@ -79,9 +79,9 @@ app.get('/', function(request, response) {
     console.log('App is running, server is listening on port ', app.get('port'));
 });
 
-var server = app.listen(app.get('port'), function() {
+/*var server = app.listen(app.get('port'), function() {
     console.log('App is running, server is listening on port ', app.get('port'));
-});
+});*/
 
 // set the view engine to ejs
 //app.set('view engine', 'ejs');
@@ -98,7 +98,7 @@ if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
    console.log("I'm in Heroku!");
 }
 
-var io = socket(server);
+/*var io = socket(server);
 
 var connectedUsers={};
 
@@ -137,4 +137,4 @@ var connectedUsers={};
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
-  });
+  });*/
