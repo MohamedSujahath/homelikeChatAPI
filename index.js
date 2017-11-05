@@ -26,7 +26,12 @@ var MongoClient = require('mongodb').MongoClient;
   /* other options */
 //});
 
-var promise = mongoose.connect('mongodb://mohamedsujahath:suju%401984@homelike-shard-00-00-eireb.mongodb.net:27017,homelike-shard-00-01-eireb.mongodb.net:27017,homelike-shard-00-02-eireb.mongodb.net:27017/homelikechat?ssl=true&replicaSet=homelike-shard-0&authSource=admin', {
+/*var promise = mongoose.connect('mongodb://mohamedsujahath:suju%401984@homelike-shard-00-00-eireb.mongodb.net:27017,homelike-shard-00-01-eireb.mongodb.net:27017,homelike-shard-00-02-eireb.mongodb.net:27017/homelikechat?ssl=true&replicaSet=homelike-shard-0&authSource=admin', {
+  useMongoClient: true,
+  /* other options */
+//});
+
+var promise = mongoose.connect('mongodb://mohamedsujahath:suju1984@ds249415.mlab.com:49415/homelikechat', {
   useMongoClient: true,
   /* other options */
 });
