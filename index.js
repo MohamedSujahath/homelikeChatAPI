@@ -57,8 +57,10 @@ app.use('/api', routes);
 
 //listen for requests
 
-var server = app.listen(process.env.port || 5000, '0.0.0.0' , function(){
-    console.log('now listening for requests');
+var port = process.env.port || 5000;
+
+var server = app.listen(port, '0.0.0.0' , function(){
+    console.log('now listening for requests on ' + port);
 
 });
 
