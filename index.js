@@ -64,6 +64,9 @@ var server = app.listen(process.env.port || 4000, '0.0.0.0' , function(){
 
 });
 
+if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
+   console.log("I'm in Heroku!");
+}
 
 var io = socket(server);
 
