@@ -59,10 +59,21 @@ app.use('/api', routes);
 
 //listen for requests
 
-var server = app.listen(process.env.port || 4000, '0.0.0.0' , function(){
+var server = app.listen(process.env.port || 5000, '0.0.0.0' , function(){
     console.log('now listening for requests');
 
 });
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+// set the home page route
+app.get('/', function(req, res) {
+
+    // ejs render automatically looks in the views folder
+    res.render('index');
+});
+
 
 if (process.env.NODE && ~process.env.NODE.indexOf("heroku")){
    console.log("I'm in Heroku!");
