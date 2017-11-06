@@ -112,7 +112,7 @@ var connectedUsers={};
       console.log('userJoined' + conversation.connectedUserEmail);
       connectedUsers[conversation.connectedUserEmail] =  socket.id;
     //  io.sockets.in(conversation).emit('refresh messages', conversation
-    console.log('Socket ID:' + conversation.connectedUserEmail + socket.id);
+    console.log('Socket ID:' + connectedUsers[conversation.connectedUserEmail] + " - " + conversation.connectedUserEmail + socket.id);
       });
 
     // On conversation entry, join broadcast channel
