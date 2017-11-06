@@ -130,7 +130,7 @@ var connectedUsers={};
       console.log('Message received' + conversation.recipientEmail, conversation.message);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
-      io.to(connectedUsers[conversation.recipientEmail]).emit('chatMessage', conversation.message);
+      socket.to(connectedUsers[conversation.recipientEmail]).emit('broadcastMessage', conversation.message);
 
       });
 
