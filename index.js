@@ -14,7 +14,7 @@ const cors = require('cors');
 
 const passport = require('passport');
 
-const users = require('../models/users');
+const users = require('./models/users');
 
 //Set up express app
 const app = express();
