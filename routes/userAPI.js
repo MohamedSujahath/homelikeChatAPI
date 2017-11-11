@@ -95,9 +95,12 @@ router.post('/getUserDetails', function(req, res){
 
 
   function updateUserCollection(email) {
-    console.log("inside updateUserCollection" + email);
 
-    users.findOneandUpdate({'email':email}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'lastLoggedIn': getTimeStamp()}}, function(err, users) {
+    console.log("inside updateUserCollection" + email);
+    var currentTimeStamp = getTimeStamp();
+
+    console.log("currentTimeStamp : " + currentTimeStamp);
+    users.update({'email':email}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'lastLoggedIn': currentTimeStamp}}, function(err, users) {
 
     });
 
