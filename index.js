@@ -14,6 +14,8 @@ const cors = require('cors');
 
 const passport = require('passport');
 
+const users = require('../models/users');
+
 //Set up express app
 const app = express();
 
@@ -108,12 +110,18 @@ var connectedUsers={};
   io.on('connection', (socket) => {
     console.log('a user connected' + socket.id);
   //  socket.to(socket.id).emit('socketID', socket.id);
+    console.log('Connected User Email ID: ' + socket.manager.handshaken[socket.id].connectedUserEmail);
+
 
     socket.on('userJoined', (conversation) => {
       console.log('userJoined' + conversation.connectedUserEmail);
-      connectedUsers[conversation.connectedUserEmail] =  socket.id;
+      users.update({'email':conversation.connectedUserEmail}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
+
+      });
+
+    //  connectedUsers[conversation.connectedUserEmail] =  socket.id;
     //  io.sockets.in(conversation).emit('refresh messages', conversation
-    console.log('Socket ID:' + connectedUsers[conversation.connectedUserEmail] + " - " + conversation.connectedUserEmail + socket.id);
+    //console.log('Socket ID:' + connectedUsers[conversation.connectedUserEmail] + " - " + conversation.connectedUserEmail + socket.id);
       });
 
     // On conversation entry, join broadcast channel
