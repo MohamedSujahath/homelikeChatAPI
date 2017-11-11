@@ -113,13 +113,14 @@ var connectedUsers={};
     //console.log('Connected User Email ID: ' + socket.request..connectedUserEmail);
 
     io.use(function(socket, next){
-        console.log("Query: ", socket.handshake.connectedUserEmail);
+        console.log("Query: ", socket.handshake.query.connectedUserEmail);
         // return the result of next() to accept the connection.
         /*if (socket.handshake.query.foo == "bar") {
             return next();
         }
         // call next() with an Error if you need to reject the connection.
         next(new Error('Authentication error'));*/
+          return next();
     });
 
 
