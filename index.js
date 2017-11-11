@@ -115,10 +115,14 @@ var connectedUsers={};
     io.use((socket, next) => {
         var emailID = socket.handshake.query.token;
         console.log('Connected User Email' + emailID);
-        if (emailID !== null ) {
+        /*if (emailID !== null ) {
           return next();
-        }
+        }*/
         //  return next(new Error('authentication error'));*/
+
+        users.update({'email':emailID}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
+
+        });
     });
 
 
