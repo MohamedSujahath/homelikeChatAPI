@@ -107,6 +107,7 @@ var connectedUsers={};
 // Set socket.io listeners.
   io.on('connection', (socket) => {
     console.log('a user connected' + socket.id);
+  //  socket.to(socket.id).emit('socketID', socket.id);
 
     socket.on('userJoined', (conversation) => {
       console.log('userJoined' + conversation.connectedUserEmail);

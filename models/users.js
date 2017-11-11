@@ -9,7 +9,11 @@ const userSchema = new Schema({
     username: String,
     password: String,
     email: String,
-    avatarImg: String
+    avatarImg: String,
+    connectedStatus: String,
+    onlineStatus: String,
+    socketID: String,
+    lastLoggedIn: Date
 });
 
 

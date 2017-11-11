@@ -41,6 +41,11 @@ router.post('/registerUser', function(req, res){
     console.log(req.body.username);
     let avatarNumber = getRandomInt(1,7);
     req.body.avatarImg = "https://bootdey.com/img/Content/avatar/avatar" + avatarNumber + ".png";
+    req.body.connectedStatus = "disconnected";
+    req.body.onlineStatus = "offline";
+    req.body.socketID = "";
+    req.body.lastLoggedIn = "";
+
     users.create(req.body).then(function(users){
             res.send(users);
     });
@@ -75,6 +80,7 @@ router.post('/getUserDetails', function(req, res){
         // Check if password matches
         user.comparePassword(req.body.password, function(err, isMatch) {
           if (isMatch && !err) {
+            updateUserCollection(req.body.email);
             // Create token if the password matched and no error was thrown
             //var token = jwt.sign(users, config.secret, { expiresIn: '1h' });
             var token = jwt.sign({exp: 10180 ,data: 'users'}, 'secret');
@@ -86,6 +92,30 @@ router.post('/getUserDetails', function(req, res){
       }
     });
   });
+
+
+  function updateUserCollection(email) {
+    console.log("inside updateUserCollection" + email);
+
+    users.findOneandUpdate({'email':email}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'lastLoggedIn': getTimeStamp()}}, function(err, users) {
+
+    });
+
+  }
+
+  function getTimeStamp() {
+    var now = new Date();
+    return ((now.getMonth() + 1) + '/' +
+            (now.getDate()) + '/' +
+             now.getFullYear() + " " +
+             now.getHours() + ':' +
+             ((now.getMinutes() < 10)
+                 ? ("0" + now.getMinutes())
+                 : (now.getMinutes())) + ':' +
+             ((now.getSeconds() < 10)
+                 ? ("0" + now.getSeconds())
+                 : (now.getSeconds())));
+  }
 
 // passport.authenticate('jwt', { session: false })  - 2 nd argument
 
