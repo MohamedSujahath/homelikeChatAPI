@@ -126,11 +126,7 @@ var connectedUsers={};
     });
 
 
-    socket.on('userJoined', (conversation) => {
-      console.log('userJoined' + conversation.connectedUserEmail);
-      users.update({'email':conversation.connectedUserEmail}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
 
-      });
 
     //  connectedUsers[conversation.connectedUserEmail] =  socket.id;
     //  io.sockets.in(conversation).emit('refresh messages', conversation
@@ -149,12 +145,16 @@ var connectedUsers={};
     })
 
     socket.on('chatMessage', (conversation) => {
-      console.log('Message received' + conversation.recipientEmail, conversation.message);
+      console.log('Message received' + conversation.authorEmail + "-" + conversation.recipientEmail + "-" + conversation.message + " - " + conversation.conversationID);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
-      console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
-      socket.to(connectedUsers[conversation.recipientEmail]).emit('broadcastMessage', conversation.message);
+      //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
+      users.findOne({'email':conversation.recipientEmail}, function(err, user) {
+          console.log("Socket ID of the Receiver: " + user.socketID + " - " + conversation.recipientEmail);
+          socket.to(user.socketID).emit('broadcastMessage', conversation);
       });
+
+    });
 
     socket.on('disconnect', () => {
       console.log('user disconnected');
