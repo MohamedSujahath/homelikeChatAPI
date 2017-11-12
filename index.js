@@ -104,7 +104,18 @@ var io = socket(server);
 
 var connectedUsers={};
 
+/*io.use((socket, next) => {
+    var emailID = socket.handshake.query.token;
+    console.log('Connected User Email' + emailID);
+    /*if (emailID !== null ) {
+      return next();
+    }*/
+    //  return next(new Error('authentication error'));*/
 
+  /*  users.update({'email':emailID}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
+
+    });
+});*/
 
 // Set socket.io listeners.
   io.on('connection', (socket) => {
@@ -112,22 +123,16 @@ var connectedUsers={};
   //  socket.to(socket.id).emit('socketID', socket.id);
     //console.log('Connected User Email ID: ' + socket.request..connectedUserEmail);
 
-            io.use((socket, next) => {
-                var emailID = socket.handshake.query.token;
-                console.log('Connected User Email' + emailID);
-                /*if (emailID !== null ) {
-                  return next();
-                }*/
-                //  return next(new Error('authentication error'));*/
+    var emailID = socket.handshake.query.token;
+    console.log('Connected User Email' + emailID);
 
-                users.update({'email':emailID}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
+    users.update({'email':emailID}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
 
-                });
-            });
+      });
           //  connectedUsers[conversation.connectedUserEmail] =  socket.id;
           //  io.sockets.in(conversation).emit('refresh messages', conversation
           //console.log('Socket ID:' + connectedUsers[conversation.connectedUserEmail] + " - " + conversation.connectedUserEmail + socket.id);
-  
+
 
     // On conversation entry, join broadcast channel
     socket.on('enter conversation', (conversation) => {
