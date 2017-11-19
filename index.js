@@ -157,14 +157,14 @@ var connectedUsers={};
 
     });
 
-    socket.on('userTyping', (conversation) => {
-      console.log('Typing event received' + conversation.typingUserEmail + "-" + conversation.typingUserName);
+    socket.on('userTyping', (typingConversation) => {
+      console.log('Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
-      users.findOne({'email':conversation.typingUserEmail}, function(err, user) {
-          console.log("Socket ID of the Receiver: " + user.socketID + " - " + conversation.typingUserEmail);
-          socket.to(user.socketID).emit('showUserTyping', conversation);
+      users.findOne({'email':typingConversation.receiverEmail}, function(err, user) {
+          console.log("Socket ID of the Receiver: " + user.socketID + " - " + typingConversation.typingUserEmail);
+          socket.to(user.socketID).emit('showUserTyping', typingConversation);
       });
 
     });
