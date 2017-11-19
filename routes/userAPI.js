@@ -51,12 +51,12 @@ router.post('/registerUser', function(req, res){
     }, function(err, user) {
       if (err) throw err;
 
-      if (!user) {
+      if (user) {
+        res.send({ success: false, message: 'User already exists !!! Please enter a new email ID' });
+      } else {
         users.create(req.body).then(function(users){
                 res.send(users);
         });
-      } else {
-            res.send({ success: false, message: 'User already exists !!! Please enter a new email ID' });
       }
     }
   )
