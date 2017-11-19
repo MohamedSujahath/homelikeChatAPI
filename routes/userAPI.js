@@ -55,7 +55,7 @@ router.post('/registerUser', function(req, res){
         res.send({ success: false, message: 'User already exists !!! Please enter a new email ID' });
       } else {
         users.create(req.body).then(function(users){
-                res.send(users);
+                res.status(200).json(users);
         });
       }
     }
