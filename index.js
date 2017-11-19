@@ -183,6 +183,16 @@ var connectedUsers={};
 
     });
 
+    socket.on('userLogout', (logoutConversation) => {
+      //console.log('Remove Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
+      //io.sockets.in(conversation).emit('refresh messages', conversation);
+      //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
+      users.update({'email': logoutConversation.userEmailID}, {$set:{'connectedStatus':"disconnected", 'onlineStatus': "offline"}}, function(err, users) {
+
+        });
+
+    });
+
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
