@@ -250,7 +250,7 @@ router.post('/newConversation/:recipient', function(req, res, next) {
 
 //Delete a Conversation
 
-router.delete('/deleteConversation',  function(req, res, next) {
+router.post('/deleteConversation',  function(req, res, next) {
   Conversation.findOneAndRemove({
     $and : [
             { '_id': req.body.conversationId }, { 'participants': req.body.user._id }
