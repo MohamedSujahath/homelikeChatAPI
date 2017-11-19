@@ -46,9 +46,22 @@ router.post('/registerUser', function(req, res){
     req.body.socketID = "";
     req.body.lastLoggedIn = "";
 
-    users.create(req.body).then(function(users){
-            res.send(users);
-    });
+    users.findOne({
+      email: req.body.email
+    }, function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        users.create(req.body).then(function(users){
+                res.send(users);
+        });
+      } else {
+            res.send({ success: false, message: 'User already exists !!! Please enter a new email ID' });
+      }
+    }
+  )
+
+
 });
 
 function getRandomInt(min, max) {
