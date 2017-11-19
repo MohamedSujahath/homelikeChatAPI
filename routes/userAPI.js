@@ -264,11 +264,11 @@ router.delete('/deleteConversation',  function(req, res, next) {
         return next();
   });
 
-    Message.remove({}, function(err) {
+    Message.remove({'conversationId': req.body.conversationId }, function(err) {
             if (err) {
                 console.log(err)
             } else {
-                res.status(200).json({ message: 'Conversation removed!' });
+                res.status(200).json({ message: 'Messages removed!' });
             }
         }
     );
