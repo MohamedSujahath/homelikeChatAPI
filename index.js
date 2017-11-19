@@ -169,6 +169,20 @@ var connectedUsers={};
 
     });
 
+
+
+    socket.on('removeUserTyping', (typingConversation) => {
+      console.log('Remove Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
+      //io.sockets.in(conversation).emit('refresh messages', conversation);
+      //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
+
+      users.findOne({'email':typingConversation.receiverEmail}, function(err, user) {
+          console.log("Socket ID of the Receiver: " + user.socketID + " - " + typingConversation.typingUserEmail);
+          socket.to(user.socketID).emit('userStoppedTyping', typingConversation);
+      });
+
+    });
+
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
