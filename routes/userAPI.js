@@ -274,19 +274,20 @@ router.post('/deleteConversation',  function(req, res, next) {
             { '_id': req.body.conversationId }, { 'participants': req.body.user._id }
            ]}, function(err) {
         if (err) {
-          res.send({ error: err });
-          return next(err);
+          //res.send({ error: err });
+          //return next(err);
+          console.log(err);
         }
 
         //res.status(200).json({ message: 'Conversation removed!' });
-        return next();
+        //return next();
   });
 
     Message.remove({'conversationId': req.body.conversationId }, function(err) {
             if (err) {
-                console.log(err)
+                console.log(err);
             } else {
-                res.status(200).json({ message: 'Messages removed!' });
+                //res.status(200).json({ message: 'Messages removed!' });
             }
         }
     );
