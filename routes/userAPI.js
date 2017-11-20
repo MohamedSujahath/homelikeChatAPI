@@ -46,6 +46,10 @@ router.post('/registerUser', function(req, res){
     req.body.socketID = "";
     req.body.lastLoggedIn = "";
 
+    /*$or : [
+            { '_id': req.body.conversationId }, { 'participants': req.body.user._id }
+          ]*/
+
     users.findOne({
       email: req.body.email
     }, function(err, user) {
