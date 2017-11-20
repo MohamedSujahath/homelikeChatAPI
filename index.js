@@ -125,9 +125,11 @@ var connectedUsers={};
 
     var emailID = socket.handshake.query.token;
     console.log('Connected User Email' + emailID);
+    var username = socket.handshake.query.name;
+    console.log('Connected User Name' + username);
 
     users.update({'email':emailID}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
-
+          socket.broadcast.emit('userLoggedIn', username);
       });
           //  connectedUsers[conversation.connectedUserEmail] =  socket.id;
           //  io.sockets.in(conversation).emit('refresh messages', conversation
