@@ -279,7 +279,7 @@ router.post('/deleteConversation',  function(req, res, next) {
           console.log(err);
         }
 
-        //res.status(200).json({ message: 'Conversation removed!' });
+        res.status(200).json({ message: 'Conversation removed!' });
         //return next();
   });
 
