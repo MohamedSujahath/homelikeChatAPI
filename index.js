@@ -199,6 +199,18 @@ var connectedUsers={};
 
     });
 
+    socket.on('chatRemoved', (deleteChatConversation) => {
+      console.log('chatRemoved' + deleteChatConversation.UserEmail + "-" + deleteChatConversation.receiverEmail);
+      //io.sockets.in(conversation).emit('refresh messages', conversation);
+      //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
+
+      users.findOne({'email':deleteChatConversation.receiverEmail}, function(err, user) {
+          console.log("Socket ID of the Receiver: " + user.socketID + " - " + deleteChatConversation.receiverEmail);
+          socket.to(user.socketID).emit('chatDeleted', deleteChatConversation);
+      });
+
+    });
+
     socket.on('userLogout', (logoutConversation) => {
       //console.log('Remove Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
