@@ -200,14 +200,16 @@ var connectedUsers={};
     });
 
     socket.on('chatRemoved', (deleteChatConversation) => {
-      console.log('chatRemoved' + deleteChatConversation.UserEmail + "-" + deleteChatConversation.receiverEmail);
+      console.log('chatRemoved' + deleteChatConversation.UserEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
-      users.findOne({'email':deleteChatConversation.receiverEmail}, function(err, user) {
-          console.log("Socket ID of the Receiver: " + user.socketID + " - " + deleteChatConversation.receiverEmail);
-          socket.to(user.socketID).emit('chatDeleted', deleteChatConversation);
-      });
+      /*users.findOne({'email':deleteChatConversation.receiverEmail}, function(err, user) {
+          //console.log("Socket ID of the Receiver: " + user.socketID);
+
+      });*/
+
+      socket.broadcast.emit('chatDeleted', deleteChatConversation);
 
     });
 
