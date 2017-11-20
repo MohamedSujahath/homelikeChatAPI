@@ -8,7 +8,7 @@ const ConversationSchema = new Schema({
   participants: [{ type: Schema.Types.ObjectId, ref: 'users'}]
 },
 {
-  timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.
+  timestamps: true 
 }
 );
 

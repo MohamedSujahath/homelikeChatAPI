@@ -38,7 +38,7 @@ router.get('/getAllUsers', function(req, res){
 });
 
 router.post('/registerUser', function(req, res){
-    console.log(req.body.username);
+    //console.log(req.body.username);
     let avatarNumber = getRandomInt(1,7);
     req.body.avatarImg = "https://bootdey.com/img/Content/avatar/avatar" + avatarNumber + ".png";
     req.body.connectedStatus = "disconnected";
@@ -114,10 +114,10 @@ router.post('/getUserDetails', function(req, res){
 
   function updateUserCollection(email) {
 
-    console.log("inside updateUserCollection" + email);
+    //console.log("inside updateUserCollection" + email);
     var currentTimeStamp = getTimeStamp();
 
-    console.log("currentTimeStamp : " + currentTimeStamp);
+    //console.log("currentTimeStamp : " + currentTimeStamp);
     users.update({'email':email}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'lastLoggedIn': currentTimeStamp}}, function(err, users) {
 
     });
@@ -143,7 +143,7 @@ router.post('/getUserDetails', function(req, res){
 // get All Conversation for a User
 router.get('/getAllConversationList', function(req, res, next) {
   // Only return one message from each conversation to display as snippet
-    console.log("get All Conversations : " +  req.query.userid);
+    //console.log("get All Conversations : " +  req.query.userid);
   Conversation.find({ participants: req.query.userid })
     .select('_id')
     .sort('-updatedAt')
@@ -182,7 +182,7 @@ router.get('/getAllConversationList', function(req, res, next) {
 
 // Get All Messages in a single Conversation
 router.get('/getAllMessagesinConversation', function(req, res, next) {
-    console.log( req.query.conversationId);
+  //  console.log( req.query.conversationId);
   Message.find({ conversationId: req.query.conversationId })
     .select('createdAt updatedAt body author conversationId')
     .sort('createdAt')
@@ -254,7 +254,7 @@ router.post('/newConversation/:recipient', function(req, res, next) {
   reply.save(function(err, sentReply) {
 
     Conversation.findByIdAndUpdate(req.body.conversationId, {timestamps: ''}, function(err, sentReply)  {
-        console.log("updated Conversation"); // here the timestamp is +5 seconds, as expected
+        //console.log("updated Conversation");
       });
     if (err) {
       res.send({ error: err });

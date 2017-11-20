@@ -119,14 +119,14 @@ var connectedUsers={};
 
 // Set socket.io listeners.
   io.on('connection', (socket) => {
-    console.log('a user connected' + socket.id);
+    //console.log('a user connected' + socket.id);
   //  socket.to(socket.id).emit('socketID', socket.id);
     //console.log('Connected User Email ID: ' + socket.request..connectedUserEmail);
 
     var emailID = socket.handshake.query.token;
-    console.log('Connected User Email' + emailID);
+    //console.log('Connected User Email' + emailID);
     var username = socket.handshake.query.name;
-    console.log('Connected User Name' + username);
+    //console.log('Connected User Name' + username);
 
     users.update({'email':emailID}, {$set:{'connectedStatus':"connected", 'onlineStatus': "online", 'socketID' : socket.id}}, function(err, users) {
           socket.broadcast.emit('userLoggedIn', username);
@@ -136,36 +136,25 @@ var connectedUsers={};
           //console.log('Socket ID:' + connectedUsers[conversation.connectedUserEmail] + " - " + conversation.connectedUserEmail + socket.id);
 
 
-    // On conversation entry, join broadcast channel
-    socket.on('enter conversation', (conversation) => {
-      socket.join(conversation);
-      console.log('joined ' + conversation);
-    });
-
-    socket.on('leave conversation', (conversation) => {
-      socket.leave(conversation);
-       console.log('left ' + conversation);
-    })
-
     socket.on('chatMessage', (conversation) => {
-      console.log('Message received' + conversation.authorEmail + "-" + conversation.recipientEmail + "-" + conversation.message + " - " + conversation.conversationID);
+      //console.log('Message received' + conversation.authorEmail + "-" + conversation.recipientEmail + "-" + conversation.message + " - " + conversation.conversationID);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
       users.findOne({'email':conversation.recipientEmail}, function(err, user) {
-          console.log("Socket ID of the Receiver: " + user.socketID + " - " + conversation.recipientEmail);
+          //console.log("Socket ID of the Receiver: " + user.socketID + " - " + conversation.recipientEmail);
           socket.to(user.socketID).emit('broadcastMessage', conversation);
       });
 
     });
 
     socket.on('userTyping', (typingConversation) => {
-      console.log('Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
+      //console.log('Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
       users.findOne({'email':typingConversation.receiverEmail}, function(err, user) {
-          console.log("Socket ID of the Receiver: " + user.socketID + " - " + typingConversation.typingUserEmail);
+          //console.log("Socket ID of the Receiver: " + user.socketID + " - " + typingConversation.typingUserEmail);
           socket.to(user.socketID).emit('showUserTyping', typingConversation);
       });
 
@@ -174,12 +163,12 @@ var connectedUsers={};
 
 
     socket.on('removeUserTyping', (typingConversation) => {
-      console.log('Remove Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
+      //console.log('Remove Typing event received' + typingConversation.typingUserEmail + "-" + typingConversation.typingUserName + "-" + typingConversation.receiverEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
       users.findOne({'email':typingConversation.receiverEmail}, function(err, user) {
-          console.log("Socket ID of the Receiver: " + user.socketID + " - " + typingConversation.typingUserEmail);
+          //console.log("Socket ID of the Receiver: " + user.socketID + " - " + typingConversation.typingUserEmail);
           socket.to(user.socketID).emit('userStoppedTyping', typingConversation);
       });
 
@@ -188,19 +177,19 @@ var connectedUsers={};
 
 
     socket.on('newChatPosted', (newChatConversation) => {
-      console.log('newChatPosted' + newChatConversation.UserEmail + "-" + newChatConversation.receiverEmail);
+      //console.log('newChatPosted' + newChatConversation.UserEmail + "-" + newChatConversation.receiverEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
       users.findOne({'email':newChatConversation.receiverEmail}, function(err, user) {
-          console.log("Socket ID of the Receiver: " + user.socketID + " - " + newChatConversation.receiverEmail);
+          //console.log("Socket ID of the Receiver: " + user.socketID + " - " + newChatConversation.receiverEmail);
           socket.to(user.socketID).emit('newChatStarted', newChatConversation);
       });
 
     });
 
     socket.on('chatRemoved', (deleteChatConversation) => {
-      console.log('chatRemoved' + deleteChatConversation.UserEmail);
+      //console.log('chatRemoved' + deleteChatConversation.UserEmail);
       //io.sockets.in(conversation).emit('refresh messages', conversation);
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
 
@@ -219,7 +208,7 @@ var connectedUsers={};
       //console.log('Socket ID of receiver: ' + connectedUsers[conversation.recipientEmail]);
       users.update({'email': logoutConversation.userEmail}, {$set:{'connectedStatus':"disconnected", 'onlineStatus': "offline"}}, function(err, users) {
           socket.broadcast.emit('userLoggedOut', logoutConversation);
-        });
+      });
 
     });
 
